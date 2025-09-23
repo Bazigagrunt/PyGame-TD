@@ -16,10 +16,6 @@ testtext2 = font2.render("I am Kled! High Major Commodore of the First Legion Th
 enemy = pygame.image.load("images/2.png").convert()
 enemy_xposition = 1800
 
-
-
-
-
 pygame.display.set_caption("Display")
 pygame.display.set_icon(pygame.image.load("Images/test.png").convert_alpha())
 
