@@ -1,4 +1,5 @@
 import pygame as pygame
+import math
 pygame.init()
 
 width, height = 2560, 1440
