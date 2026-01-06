@@ -19,6 +19,7 @@ COLOR_WHITE = (255, 255, 255)
 COLOR_GRAY = (80, 80, 80)
 COLOR_DARK_GRAY = (40, 40, 40)
 COLOR_PURE_GREEN = (50, 255, 50) 
+COLOR_RED = (255, 50, 50)
 
 # Enums
 class GameState(Enum):
@@ -271,7 +272,6 @@ LEVELS = [
     {
         'id': 1, 'name': "The Outskirts", 'startGold': 250, 'startLives': 10,
         'path': [(0, 50), (100, 50), (100, 200), (300, 200), (300, 100), (500, 100), (500, 300), (600, 300)],
-        # Build spots adjusted for distance
         'buildSpots': [(140, 170), (70, 90), (340, 170), (260, 140), (460, 140), (540, 260)],
         'waves': generate_waves_for_level(1.0)
     },
@@ -487,6 +487,7 @@ class Game:
         self.gold = 0
         self.wave_index = 0
         self.completed_levels = set()
+        self.menu_quit_confirm = False # Toggle for quit confirmation
         
         self.towers = []
         self.enemies = []
@@ -842,6 +843,13 @@ class Game:
                 self.screen.blit(txt, txt.get_rect(center=btn_rect.center))
                 self.ui_rects["START_WAVE"] = btn_rect
 
+                # --- NEXT ENEMY TEXT ---
+                next_wave_data = self.current_level['waves'][self.wave_index]
+                e_type_name = next_wave_data['enemyType'].name
+                info_txt = self.font_small.render(f"INCOMING: {e_type_name}", True, COLOR_WHITE)
+                # Position it to the right of the button
+                self.screen.blit(info_txt, (btn_rect.right + 20, btn_rect.centery - info_txt.get_height()//2))
+
             quit_rect = pygame.Rect(self.current_w - 120, 15, 100, 30)
             pygame.draw.rect(self.screen, COLOR_WHITE, quit_rect, 1)
             q_txt = self.font_tiny.render("QUIT", True, COLOR_WHITE)
@@ -1036,10 +1044,19 @@ class Game:
                             btn_rect = pygame.Rect(self.current_w//2 - 150, self.current_h//2 + 50, 300, 80)
                             if btn_rect.collidepoint(pos):
                                 self.state = GameState.LEVEL_SELECT
+                                self.menu_quit_confirm = False # Reset if leaving menu
+
                             quit_mm_rect = pygame.Rect(self.current_w//2 - 150, self.current_h//2 + 150, 300, 50)
                             if quit_mm_rect.collidepoint(pos):
-                                pygame.quit()
-                                sys.exit()
+                                if self.menu_quit_confirm:
+                                    pygame.quit()
+                                    sys.exit()
+                                else:
+                                    self.menu_quit_confirm = True
+                            else:
+                                # Clicked elsewhere, reset confirm
+                                self.menu_quit_confirm = False
+
                         elif self.state == GameState.LEVEL_SELECT:
                             w, h = 300, 200
                             gap = 50
@@ -1117,10 +1134,17 @@ class Game:
                 pygame.draw.rect(self.screen, COLOR_WHITE, btn_rect, 4)
                 txt = self.font_large.render("START GAME", True, COLOR_WHITE)
                 self.screen.blit(txt, txt.get_rect(center=btn_rect.center))
+                
+                # --- MODIFIED QUIT BUTTON RENDER ---
                 quit_mm_rect = pygame.Rect(self.current_w//2 - 150, self.current_h//2 + 150, 300, 50)
                 pygame.draw.rect(self.screen, COLOR_WHITE, quit_mm_rect, 2)
-                q_txt = self.font_med.render("QUIT", True, COLOR_WHITE)
+                
+                q_text_str = "REALLY QUIT?" if self.menu_quit_confirm else "QUIT"
+                q_color = COLOR_RED if self.menu_quit_confirm else COLOR_WHITE
+                
+                q_txt = self.font_med.render(q_text_str, True, q_color)
                 self.screen.blit(q_txt, q_txt.get_rect(center=quit_mm_rect.center))
+                
                 hint = self.font_tiny.render("Press F11 for Fullscreen", True, COLOR_GRAY)
                 self.screen.blit(hint, (10, self.current_h - 30))
 
