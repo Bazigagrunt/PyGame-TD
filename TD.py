@@ -16,7 +16,7 @@ font2 = pygame.font.Font("Fonts/Minecraft.ttf", 35)
 #testtext = font.render("I am Kled! High Major Commodore of the First Legion Third Multiplication Double Admiral Artillery Vanguard Company! You will respect my authority!", False, "yellow")
 #testtext2 = font2.render("I am Kled! High Major Commodore of the First Legion Third Multiplication Double Admiral Artillery Vanguard Company! You will respect my authority!", True, "red")
 
-player_surf = pygame.image.load("Images/16.png").convert_alpha()
+player_surf = pygame.image.load("Images/6.png").convert_alpha()
 player_rect = player_surf.get_rect(bottomleft = (0, 1000))
 
 enemy_surf = pygame.image.load("images/2.png").convert()
