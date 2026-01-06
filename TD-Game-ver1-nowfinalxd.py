@@ -366,7 +366,7 @@ class Enemy:
         self.frozen_factor = 1.0
         self.frozen_timer = 0
         self.poison_timer = 0
-        self.skill_cooldown = 120
+        self.skill_cooldown = 90
 
     def update(self):
         self.frozen_factor = 1.0 if self.frozen_timer <= 0 else self.frozen_factor
@@ -601,7 +601,7 @@ class Game:
                     self.wave_timer += 1
                 elif len(self.enemies) == 0:
                     self.wave_active = False
-                    self.gold += 100 + (self.wave_index * 50)
+                    self.gold += 100 + (self.wave_index * 40)
                     if self.wave_index == len(self.current_level['waves']) - 1:
                         self.completed_levels.add(self.current_level['id'])
                         self.state = GameState.VICTORY
@@ -688,13 +688,13 @@ class Game:
                                 min_d = d
                                 closest = t
                         if closest:
-                            closest.disabled_timer = 300
+                            closest.disabled_timer = 210
                             e.skill_cooldown = 300
 
                 if e.hp <= 0:
-                    bounty = 5
+                    bounty = 10
                     if e.type == EnemyType.TANK: bounty = 15
-                    if e.type == EnemyType.JUGGERNAUT: bounty = 30
+                    if e.type == EnemyType.JUGGERNAUT: bounty = 25
                     if e.type == EnemyType.SHAMAN: bounty = 20
                     self.gold += bounty
                     self.enemies.remove(e)
