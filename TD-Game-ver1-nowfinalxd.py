@@ -602,7 +602,7 @@ class Game:
                     self.wave_timer += 1
                 elif len(self.enemies) == 0:
                     self.wave_active = False
-                    self.gold += 100 + (self.wave_index * 40)
+                    self.gold += 100 + (self.wave_index * 25)
                     if self.wave_index == len(self.current_level['waves']) - 1:
                         self.completed_levels.add(self.current_level['id'])
                         self.state = GameState.VICTORY
