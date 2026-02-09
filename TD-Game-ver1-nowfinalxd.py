@@ -693,10 +693,10 @@ class Game:
                             e.skill_cooldown = 300
 
                 if e.hp <= 0:
-                    bounty = 10
-                    if e.type == EnemyType.TANK: bounty = 15
-                    if e.type == EnemyType.JUGGERNAUT: bounty = 25
-                    if e.type == EnemyType.SHAMAN: bounty = 20
+                    bounty = 5
+                    if e.type == EnemyType.TANK: bounty = 10
+                    if e.type == EnemyType.JUGGERNAUT: bounty = 20
+                    if e.type == EnemyType.SHAMAN: bounty = 25
                     self.gold += bounty
                     self.enemies.remove(e)
                     continue
