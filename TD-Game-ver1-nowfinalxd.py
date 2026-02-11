@@ -7,7 +7,7 @@ from enum import Enum
 # --- CONFIGURATION & CONSTANTS ---
 SCREEN_WIDTH = 1280 
 SCREEN_HEIGHT = 720
-FPS = 600
+FPS = 60
 
 # LOGICAL SCREEN (Game Balance coords)
 LOGICAL_WIDTH = 600
