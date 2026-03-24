@@ -271,17 +271,26 @@ def generate_waves_for_level(difficulty_multiplier):
 LEVELS = [
     {
         'id': 1, 'name': "The Outskirts", 'startGold': 250, 'startLives': 10,
-        'path': [(0, 50), (100, 50), (100, 200), (300, 200), (300, 100), (500, 100), (500, 300), (600, 300)],
-        'buildSpots': [(140, 170), (70, 90), (340, 170), (260, 140), (460, 140), (540, 260)],
+        'path': [
+            (0, 50), (100, 50),
+            (100, 200), (300, 200),
+            (300, 100), (500, 100),
+            (500, 300), (600, 300)
+            ],
+        'buildSpots': [
+            (140, 170), (70, 90),
+            (340, 170), (260, 140),
+            (460, 140), (540, 260)
+            ],
         'waves': generate_waves_for_level(1.0)
     },
     {
         'id': 2, 'name': "Winding Woods", 'startGold': 350, 'startLives': 10,
         'path': [
-            (0, 50), (150, 50), (150, 350), 
-            (300, 350), (300, 50), 
-            (450, 50), (450, 350), 
-            (600, 350)
+            (0, 50), (150, 50),
+            (150, 350), (300, 350),
+            (300, 50), (450, 50),
+            (450, 350), (600, 350)
         ],
         'buildSpots': [
             (95, 120), (55, 300), 
@@ -383,6 +392,7 @@ class Enemy:
         dx = target_node[0] - self.x
         dy = target_node[1] - self.y
         dist = math.sqrt(dx*dx + dy*dy)
+
         
         actual_speed = self.speed * self.frozen_factor
         
